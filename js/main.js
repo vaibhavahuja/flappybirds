@@ -1,5 +1,7 @@
 var mainState = {
 	preload: function(){
+		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
 		game.load.image('bird','assets/bird.png');
 		game.load.image('pipe','assets/pipe.png');
 		game.load.image('bird2','assets/pipe.png');
