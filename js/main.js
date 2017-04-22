@@ -32,9 +32,12 @@ var mainState = {
 		this.pipes = game.add.group();
 		this.timer = game.time.events.loop(1500,this.addRowOfPipes,this);
 		
-		this.score = 0;
+		this.score = -1;
 		this.labelScore = game.add.text(20,20,'0',{font: '30px Arial',fill:'black'});
 		
+		
+		this.highScore1 = game.add.text(20,50,' ',{font: '20px Calibri ',fill:'black'});
+
 		game.load.audio('jump','assets/jump.wav');
 		this.jumpSound = game.add.audio('jump');
 		
@@ -59,6 +62,10 @@ var mainState = {
 			this.bird.angle += 1;
 		}
 		
+		this.highScore1.text = 'High Score: '+highScore[highScore.length - 1]
+
+		
+		
 	},
 	
 	
@@ -76,6 +83,12 @@ var mainState = {
 	
 	restartGame: function(){
 		game.state.start('main');
+		
+		highScore.push(this.score);
+		highScore.sort(function(a, b){return a-b});
+		
+
+
 	},
 	
 	addOnePipe: function(x,y){
@@ -109,12 +122,13 @@ var mainState = {
 			p.body.velocity.x = 0;
 		},this);
 		this.collisionsSound.play();
+
 	},
 };
 
 
 
-
+var highScore = [0];
 
 
 var game = new Phaser.Game(400,490);
