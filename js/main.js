@@ -2,8 +2,10 @@ var mainState = {
 	preload: function(){
 		game.load.image('bird','assets/bird.png');
 		game.load.image('pipe','assets/pipe.png');
+		game.load.image('bird2','assets/pipe.png');
 		game.load.audio('jump','assets/jump.wav');
-		game.load.audio('collision','assets/col.wav');		
+		game.load.audio('collision','assets/col.wav');	
+		
 	},	
 	
 	create: function(){
@@ -16,8 +18,13 @@ var mainState = {
 		game.physics.arcade.enable(this.bird);
 		this.bird.body.gravity.y = 1000;
 		
+		this.bird2 = game.add.sprite(100,-50,'bird2');
+		game.physics.arcade.enable(this.bird2);
+		this.bird2.body.immovable = true;
+		
 		var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceKey.onDown.add(this.jump,this);
+		game.input.onTap.add(this.jump,this);
 		
 		
 		this.pipes = game.add.group();
@@ -31,11 +38,16 @@ var mainState = {
 		
 		game.load.audio('collision','assets/col.wav');
 		this.collisionsSound = game.add.audio('collision');
+		
+
 	},
 	
 	update: function(){
 		
-		if (this.bird.y < 0 || this.bird.y>490){
+		game.physics.arcade.collide(this.bird, this.bird2);
+
+		
+		if (this.bird.y>490){
 			this.restartGame();
 		}
 		
